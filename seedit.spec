@@ -160,7 +160,7 @@ fi
 %attr(755,root,root) %{_sbindir}/seedit-gui-edit
 %attr(755,root,root) %{_sbindir}/seedit-gui-load
 %{py_sitedir}/%{name}/ui
-%{_datadir}/icons/%{name}
+%{_iconsdir}/%{name}
 #%{_desktopdir}/seedit-gui.desktop
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/security/console.apps/seedit-gui
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/pam.d/seedit-gui
@@ -168,9 +168,10 @@ fi
 
 %files policy
 %defattr(644,root,root,755)
+%dir %{_sysconfdir}/%{name}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/policy
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/selinux/%{name}
-%{_datadir}/%{name}/initialize/
+%{_datadir}/%{name}/initialize
 %attr(755,root,root) %{_sbindir}/seedit-init
 %ghost %{_datadir}/%{name}/sepolicy/need-init
 %ghost %{_datadir}/%{name}/sepolicy/need-rbac-init

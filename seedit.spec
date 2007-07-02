@@ -7,7 +7,7 @@ License:	GPL
 Group:		Applications
 Source0:	http://downloads.sourceforge.net/seedit/%{name}-%{version}.tar.gz
 # Source0-md5:	2c9b44bd9a14b2e60fb1987161c6a797
-#Source1:	%{name}-gui.desktop
+Source1:	%{name}-gui.desktop
 #Source2:	%{name}-gui.png
 URL:		http://seedit.sourceforge.net/
 BuildRequires:	byacc
@@ -97,7 +97,7 @@ cd policy
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-#install %{SOURCE1} ${RPM_BUILD_ROOT}%{_desktopdir}
+install %{SOURCE1} ${RPM_BUILD_ROOT}%{_desktopdir}
 #install %{SOURCE2} ${RPM_BUILD_ROOT}%{_pixmapspdir}
 
 touch ${RPM_BUILD_ROOT}%{_datadir}/%{name}/sepolicy/need-rbac-init
@@ -161,7 +161,7 @@ fi
 %attr(755,root,root) %{_sbindir}/seedit-gui-load
 %{py_sitedir}/%{name}/ui
 %{_iconsdir}/%{name}
-#%{_desktopdir}/seedit-gui.desktop
+%{_desktopdir}/seedit-gui.desktop
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/security/console.apps/seedit-gui
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/pam.d/seedit-gui
 #{_pixmapsdir}/seedit-gui.png

@@ -2,7 +2,7 @@ Summary:	SELinux Policy Editor (SEEdit)
 Summary(pl.UTF-8):	SELinux Policy Editor (SEEdit)
 Name:		seedit
 Version:	2.1.2
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Applications
 Source0:	http://downloads.sourceforge.net/seedit/%{name}-%{version}.tar.gz

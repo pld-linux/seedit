@@ -26,6 +26,9 @@ Requires:	libsepol >= 1.1.1
 Requires:	m4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		ARGS CUSTOMIZABLE_TYPE=y MODULAR=y PAM_INCLUDE_SUPPORT=y AUDIT_OBJ_TYPE_SUPPORT=y POLICYTYPE=easy AUDITRULES=%{_sysconfdir}/audit/audit.rules SELINUXCONFIG=%{_sysconfdir}/selinux DEVELFLAG=0 SELINUXTYPE=seedit
+#PYTHON_VER=2.4 DISTRO=FC6
+
 %description
 SELinux Policy Editor(SEEdit) is a tool to make SELinux easy.
 SEEdit is composed of Simplified Policy, command line utils and GUI.
@@ -61,41 +64,35 @@ Sample simplified policy for SEEdit.
 
 %build
 
-PYTHON_SITELIB=%{py_sitedir}/
-CUSTOMIZABLE_TYPE=y
-MODULAR=y
-PAM_INCLUDE_SUPPORT=y
-AUDIT_OBJ_TYPE_SUPPORT=y
-POLICYTYPE=easy
-AUDITRULES=%{_sysconfdir}/audit/audit.rules
-SELINUXCONFIG=%{_sysconfdir}/selinux
-DEVELFLAG=0
-SELINUXTYPE=seedit
-
-export PYTHON_SITELIB CUSTOMIZABLE_TYPE MODULAR PAM_INCLUDE_SUPPORT AUDIT_OBJ_TYPE_SUPPORT POLICYTYPE AUDITRULES DEVELFLAG SELINUXTYPE
-
 cd core
 %{__make} \
 	CFLAGS="%{rpmcflags}" \
-	LDFLAGS="%{rpmldflags}"
+	LDFLAGS="%{rpmldflags}" \
+	PYTHON_SITELIB=%{py_sitedir} \
+	%ARGS
 cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir}}
+install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir},%{py_sitedir}}
 
 cd core
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	PYTHON_SITELIB=$RPM_BUILD_ROOT%{py_sitedir} \
+	%ARGS
 cd ..
 cd gui
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	PYTHON_SITELIB=$RPM_BUILD_ROOT%{py_sitedir} \
+	%ARGS
 cd ..
 cd policy
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	%ARGS
 
 install %{SOURCE1} ${RPM_BUILD_ROOT}%{_desktopdir}
 #install %{SOURCE2} ${RPM_BUILD_ROOT}%{_pixmapspdir}

@@ -64,33 +64,28 @@ Sample simplified policy for SEEdit.
 
 %build
 
-cd core
-%{__make} \
+%{__make} -C core \
 	CFLAGS="%{rpmcflags}" \
 	LDFLAGS="%{rpmldflags}" \
 	PYTHON_SITELIB=%{py_sitedir} \
 	%ARGS
-cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir},%{py_sitedir}}
 
-cd core
-%{__make} install \
+%{__make} -C core install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	PYTHON_SITELIB=$RPM_BUILD_ROOT%{py_sitedir} \
 	%ARGS
-cd ..
-cd gui
-%{__make} install \
+
+%{__make} -C gui install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	PYTHON_SITELIB=$RPM_BUILD_ROOT%{py_sitedir} \
 	%ARGS
-cd ..
-cd policy
-%{__make} install \
+
+%{__make} -C policy install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	%ARGS
 

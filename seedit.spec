@@ -95,8 +95,6 @@ install %{SOURCE1} ${RPM_BUILD_ROOT}%{_desktopdir}
 touch ${RPM_BUILD_ROOT}%{_datadir}/%{name}/sepolicy/need-rbac-init
 touch ${RPM_BUILD_ROOT}%{_datadir}/%{name}/sepolicy/need-init
 
-%py_postclean
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 

@@ -1,10 +1,10 @@
 Summary:	SELinux Policy Editor (SEEdit)
-Summary(pl.UTF-8):	SELinux Policy Editor (SEEdit)
+Summary(pl.UTF-8):	SEEdit - edytor polityk SELinuksa
 Name:		seedit
 Version:	2.1.2
 Release:	0.2
-License:	GPL
-Group:		Applications
+License:	GPL v2+
+Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/seedit/%{name}-%{version}.tar.gz
 # Source0-md5:	2c9b44bd9a14b2e60fb1987161c6a797
 Source1:	%{name}-gui.desktop
@@ -30,20 +30,25 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 #PYTHON_VER=2.4 DISTRO=FC6
 
 %description
-SELinux Policy Editor(SEEdit) is a tool to make SELinux easy.
-SEEdit is composed of Simplified Policy, command line utils and GUI.
-The main feature is Simplified Policy.
-Simplified Policy is written in Simplified Policy Description Language(SPDL).
-SPDL hides detail of SELinux.
+SELinux Policy Editor (SEEdit) is a tool to make SELinux easy. SEEdit
+is composed of Simplified Policy, command line utils and GUI. The main
+feature is Simplified Policy. Simplified Policy is written in
+Simplified Policy Description Language (SPDL). SPDL hides detail of
+SELinux.
 
 %description -l pl.UTF-8
+SELinux Policy Editor (SEEdit) to narzędzie ułatwiające konfigurację
+SELinuksa. Składa się z uproszczonej polityki (Simplified Policy),
+narzędzi linii poleceń i GUI. Głównym elementem jest uproszczona
+polityka pisana w języku SPDL (Simplified Policy Description
+Language). SPDL ukrywa szczegóły SELinuksa.
 
 %package gui
 Summary:	GUI for SELinux Policy Editor
-Summary(pl.UTF-8):	Interfejs graficzny dla SELinux Policy Editor
-Group:		X11/Aplications
+Summary(pl.UTF-8):	Interfejs graficzny dla SEEdita
+Group:		X11/Applications
 Requires:	usermode
-Requires:	pygtk2
+Requires:	python-pygtk-gtk >= 2:2.0
 Requires:	pam >= 0.80-9
 Requires:	%{name} = %{version}-%{release}
 Requires:	%{name}-policy = %{version}-%{release}
@@ -51,19 +56,25 @@ Requires:	%{name}-policy = %{version}-%{release}
 %description gui
 X based GUI for SELinux Policy Editor.
 
+%description gui -l pl.UTF-8
+Oparty na X graficzny interfejs użytkownika dla SEEdita.
+
 %package policy
-Summary:	SELinux Policy Editor: Sample simplified policy
-Group:		-
+Summary:	Sample simplified policy for SEEdit
+Summary(pl.UTF-8):	Przykładowa uproszczona polityka dla SEEdita
+Group:		Applications/System
 Requires:	%{name} = %{version}-%{release}
 
 %description policy
 Sample simplified policy for SEEdit.
 
+%description policy -l pl.UTF-8
+Przykładowa uproszczona polityka dla SEEdita.
+
 %prep
 %setup -q
 
 %build
-
 %{__make} -C core \
 	CFLAGS="%{rpmcflags}" \
 	LDFLAGS="%{rpmldflags}" \
@@ -72,7 +83,6 @@ Sample simplified policy for SEEdit.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir},%{py_sitedir}}
 
 %{__make} -C core install \
@@ -89,11 +99,11 @@ install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir},%{py_sitedir}}
 	DESTDIR=$RPM_BUILD_ROOT \
 	%ARGS
 
-install %{SOURCE1} ${RPM_BUILD_ROOT}%{_desktopdir}
-#install %{SOURCE2} ${RPM_BUILD_ROOT}%{_pixmapspdir}
+install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
+#install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapspdir}
 
-touch ${RPM_BUILD_ROOT}%{_datadir}/%{name}/sepolicy/need-rbac-init
-touch ${RPM_BUILD_ROOT}%{_datadir}/%{name}/sepolicy/need-init
+touch $RPM_BUILD_ROOT%{_datadir}/%{name}/sepolicy/need-rbac-init
+touch $RPM_BUILD_ROOT%{_datadir}/%{name}/sepolicy/need-init
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -122,7 +132,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc README Changelog COPYING AUTHORS NEWS TODO
+%doc AUTHORS Changelog NEWS README TODO
 %attr(755,root,root) %{_bindir}/seedit-converter
 %attr(755,root,root) %{_bindir}/audit2spdl
 %attr(755,root,root) %{_sbindir}/seedit-rbac

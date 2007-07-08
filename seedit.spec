@@ -9,8 +9,10 @@ Source0:	http://downloads.sourceforge.net/seedit/%{name}-%{version}.tar.gz
 # Source0-md5:	2c9b44bd9a14b2e60fb1987161c6a797
 Source1:	%{name}-gui.desktop
 #Source2:	%{name}-gui.png
+Patch0:		%{name}-bison.patch
+Patch1:		%{name}-pmake.patch
 URL:		http://seedit.sourceforge.net/
-BuildRequires:	byacc
+BuildRequires:	bison
 BuildRequires:	desktop-file-utils
 BuildRequires:	flex
 BuildRequires:	gettext-devel
@@ -73,12 +75,16 @@ Przykładowa uproszczona polityka dla SEEdita.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 
 %build
 %{__make} -C core \
+	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags}" \
 	LDFLAGS="%{rpmldflags}" \
 	PYTHON_SITELIB=%{py_sitedir} \
+	YACC="bison -y" \
 	%ARGS
 
 %install
@@ -105,6 +111,8 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 touch $RPM_BUILD_ROOT%{_datadir}/%{name}/sepolicy/need-rbac-init
 touch $RPM_BUILD_ROOT%{_datadir}/%{name}/sepolicy/need-init
 
+%find_lang %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -128,8 +136,6 @@ if [ "$1" = "0" ]; then
 	touch /.autorelabel
 fi
 
-%find_lang %{name}
-
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS Changelog NEWS README TODO
@@ -149,7 +155,7 @@ fi
 %dir %{_datadir}/%{name}/sepolicy
 %{_datadir}/%{name}/seedit-load.conf
 
-%files gui
+%files gui -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/seedit-gui
 %attr(755,root,root) %{_sbindir}/seedit-gui

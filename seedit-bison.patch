@@ -1,0 +1,22 @@
+--- seedit-2.1.2/core/lib/middle_lang.l.orig	2007-05-24 05:37:51.000000000 +0200
++++ seedit-2.1.2/core/lib/middle_lang.l	2007-07-08 21:07:52.940290369 +0200
+@@ -26,15 +26,15 @@
+ %option nounput
+ 
+ %{
++#ifndef YYSTYPE
++#define YYSTYPE char *
++#endif
++
+ #include <stdio.h>
+ #include <string.h>
+ #include "y.tab.h"
+ #include <seedit/common.h>
+ 
+-#ifndef YYSTYPE
+-#define YYSTYPE char *
+-#endif
+-
+ extern YYSTYPE yylval;
+ /*To handle comment*/
+ char **yycomment = NULL; /*NULL terminated array that stores comments*/

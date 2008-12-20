@@ -1,12 +1,12 @@
 Summary:	SELinux Policy Editor (SEEdit)
 Summary(pl.UTF-8):	SEEdit - edytor polityk SELinuksa
 Name:		seedit
-Version:	2.1.2
-Release:	0.2
+Version:	2.2.0
+Release:	0.1
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/seedit/%{name}-%{version}.tar.gz
-# Source0-md5:	2c9b44bd9a14b2e60fb1987161c6a797
+# Source0-md5:	f5414445a692b5dfe1aa793fcde59d96
 Source1:	%{name}-gui.desktop
 #Source2:	%{name}-gui.png
 Patch0:		%{name}-bison.patch

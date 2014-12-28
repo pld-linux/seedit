@@ -15,7 +15,7 @@ URL:		http://seedit.sourceforge.net/
 BuildRequires:	bison
 BuildRequires:	desktop-file-utils
 BuildRequires:	flex
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	libselinux-devel >= 1.19
 BuildRequires:	libsepol-devel >= 1.1.1
 BuildRequires:	rpm-pythonprov
